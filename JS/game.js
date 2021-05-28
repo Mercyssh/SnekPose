@@ -43,9 +43,7 @@ window.addEventListener('keyup', function(e) {
     
 })
 
-
 // DEFINE SNAKE OBJECT
-
 // generate initial body
 var _body = [];
 _u = 0;
@@ -145,7 +143,6 @@ function SnakeDraw(){
     // render head
     let head = snake.body[snake.body.length-1];
     let neck = snake.body[snake.body.length-2];
-
     if(snake.moving){
     switch(snake.lastdir){
         case 'Up':
@@ -186,19 +183,13 @@ function SnakeDraw(){
     }
 }
 
-
-// LOG STATS FOR THE GAME - COMMENT THIS OUT IF NOT DEV
-function GameLog(){
-
-}
-
 // EXECUTE GAME LOOP
 function main(deltaTime){
-    SnakeStep();
-    SnakeDraw();
-    GameLog();
 
-    //Recall the loop
+    // handle snake
+    SnakeStep(); SnakeDraw();
+
+    // recall the loop
     window.requestAnimationFrame(main);
 }
 window.requestAnimationFrame(main);
