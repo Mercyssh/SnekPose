@@ -105,7 +105,7 @@ function GameStep(){
     if(snake.moving){
         snake.timer+=1 //BReAKS HERE WHY?
         // console.log(snake.timer>gametick);
-        if(snake.timer>gametick){
+        if(snake.timer>=gametick){
             snake.moving=false;
             snake.timer=0;
             // console.log(snake.timer)
