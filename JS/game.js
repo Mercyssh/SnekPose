@@ -17,7 +17,7 @@ window.addEventListener('keydown', function(e) {
     if(e.key=='ArrowUp' || e.key=='ArrowLeft' || e.key=='ArrowDown' || e.key=='ArrowRight')
         input = e.key.replace('Arrow', '');
     else { 
-        if(e.key=='w') input='Up'; 
+        if(e.key=='w') input+='Up'; 
         if(e.key=='a') input='Left';
         if(e.key=='s') input='Down';
         if(e.key=='d') input='Right';
@@ -27,17 +27,18 @@ window.addEventListener('keyup', function(e) {
 
     // If no keys are pressed, clear input
     if(input=='Up')
-        if(e.key=='w' || e.key=='ArrowUp');
+        if(e.key=='w' || e.key=='ArrowUp')
             input='';
     if(input=='Left')
-        if(e.key=='a' || e.key=='ArrowLeft');
+        if(e.key=='a' || e.key=='ArrowLeft')
             input='';
     if(input=='Down')
-        if(e.key=='s' || e.key=='ArrowDown');
+        if(e.key=='s' || e.key=='ArrowDown')
             input='';
     if(input=='Right')
-        if(e.key=='d' || e.key=='ArrowRight');
+        if(e.key=='d' || e.key=='ArrowRight')
             input='';
+    
 })
 
 
