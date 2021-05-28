@@ -10,10 +10,10 @@ const tilesize = room.width/gridsize;   // size of each individual grid tile
 
 
 // RECIEVE AND HANDLE INPUT
+// TRY CONVERTING TO STRING CONCAT AND REPLACE TYPE
 var input = '';     // string to keep track of last pressed button
 var lastkey;        // used to make sure the same keydown key is not registered twice
 window.addEventListener('keydown', function(e) {
-    // if(!snake.moving){      //If snake is moving, then there is no need to take input
     if(e.key=='ArrowUp' || e.key=='ArrowLeft' || e.key=='ArrowDown' || e.key=='ArrowRight')
         input = e.key.replace('Arrow', '');
     else { 
@@ -22,8 +22,6 @@ window.addEventListener('keydown', function(e) {
         if(e.key=='s') input='Down';
         if(e.key=='d') input='Right';
     }
-    // }
-    // console.log(input)
 })
 window.addEventListener('keyup', function(e) {
 
@@ -59,58 +57,62 @@ var snake = {
 // GAME LOGIC
 function GameStep(){
 
-    if(input=='' && snake.direction!='')
-        snake.direction='';
-        
-    if(input!='' && snake.moving==false){
-        snake.moving=true;                              // stop taking any input
-        snake.direction=input;                          // set direction of movement
+    snake.direction = input;
 
+
+    if(snake.moving==true){
+        snake.timer++;
+        if(snake.timer>gametick){
+            snake.moving=false;
+            snake.timer=0;
+        }
+    }
+    //If snake is not moving
+    if(snake.moving==false){
+
+        // console.log('test')
         let head = snake.body[snake.body.length-1];     // last object in body array is head
         let neck = snake.body[snake.body.length-2];     // object just before the head is the neck
 
-        switch(snake.direction){
-            case 'Up':
-                if(!(neck.x==head.x && head.y>neck.y)){
-                    snake.body.push({x:head.x, y:head.y-1});
-                    snake.body.shift();
-                }
-                break;
-
-            case 'Left':
-                if(!(neck.x<head.x && head.y==neck.y)){
-                    snake.body.push({x:head.x-1, y:head.y});
-                    snake.body.shift();
-                }
-                break;
-            
-            case 'Down':
-                if(!(neck.x==head.x && head.y<neck.y)){
-                    snake.body.push({x:head.x, y:head.y+1});
-                    snake.body.shift();
-                }
-                break;
-
-            case 'Right':
-                if(!(neck.x>head.x && head.y==neck.y)){
-                    snake.body.push({x:head.x+1, y:head.y});
-                    snake.body.shift();
-                }
-                break;
-            
-            default:
-                break;
+        // set snake state to moving. and update body
+        if(snake.direction!=''){
+            snake.moving=true;
+            switch(snake.direction){
+                case 'Up':
+                    if(!(neck.x==head.x && head.y>neck.y)){
+                        snake.body.push({x:head.x, y:head.y-1});
+                        snake.body.shift();
+                    }
+                    break;
+    
+                case 'Left':
+                    if(!(neck.x<head.x && head.y==neck.y)){
+                        snake.body.push({x:head.x-1, y:head.y});
+                        snake.body.shift();
+                    }
+                    break;
+                
+                case 'Down':
+                    if(!(neck.x==head.x && head.y<neck.y)){
+                        snake.body.push({x:head.x, y:head.y+1});
+                        snake.body.shift();
+                    }
+                    break;
+    
+                case 'Right':
+                    if(!(neck.x>head.x && head.y==neck.y)){
+                        snake.body.push({x:head.x+1, y:head.y});
+                        snake.body.shift();
+                    }
+                    break;
+                
+                default:
+                    break;
+            }
+            // console.log('moving')
         }
+
     }
-    if(snake.moving){
-        snake.timer+=1 //BReAKS HERE WHY?
-        // console.log(snake.timer>gametick);
-        if(snake.timer>=gametick){
-            snake.moving=false;
-            snake.timer=0;
-            // console.log(snake.timer)
-        }
-    }    
 
     // snake.timer++;
     // if(snake.timer>gametick){
@@ -170,32 +172,32 @@ function GameDraw(){
         
     let moveincrement = tilesize/gametick; //Gives size of each increment to be made for a smooth transition
 
-    // render head
-    let head = snake.body[snake.body.length-1];
-    switch(snake.direction){
-        case 'Up':
-            ctx.fillRect(head.x*tilesize, (head.y*tilesize)+tilesize, tilesize, -moveincrement*snake.timer);
-            break;
+    // // render head
+    // let head = snake.body[snake.body.length-1];
+    // switch(snake.direction){
+    //     case 'Up':
+    //         ctx.fillRect(head.x*tilesize, (head.y*tilesize)+tilesize, tilesize, -moveincrement*snake.timer);
+    //         break;
 
-        case 'Left':
-            ctx.fillRect((head.x*tilesize)+tilesize, head.y*tilesize, -moveincrement*snake.timer, tilesize);
-            break;
+    //     case 'Left':
+    //         ctx.fillRect((head.x*tilesize)+tilesize, head.y*tilesize, -moveincrement*snake.timer, tilesize);
+    //         break;
 
-        case 'Down':
-            ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, moveincrement*snake.timer);
-            break;
+    //     case 'Down':
+    //         ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, moveincrement*snake.timer);
+    //         break;
 
-        case 'Right':
-            ctx.fillRect((head.x*tilesize), head.y*tilesize, moveincrement*snake.timer, tilesize);
-            break;
+    //     case 'Right':
+    //         ctx.fillRect((head.x*tilesize), head.y*tilesize, moveincrement*snake.timer, tilesize);
+    //         break;
 
-        default:
-            ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
-            break;
-    }
+    //     default:
+    //         ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
+    //         break;
+    // }
 
     //render body
-    for(var i=1; i<snake.body.length-1; i++){
+    for(var i=0; i<snake.body.length; i++){
         ctx.fillRect(snake.body[i].x*tilesize, snake.body[i].y*tilesize, tilesize, tilesize)
     }
 }
