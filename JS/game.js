@@ -86,7 +86,6 @@ function SnakeStep(){
             snake.lastdir=snake.direction;
         }
 
-        // console.log('test')
         let head = snake.body[snake.body.length-1];     // last object in body array is head
         let neck = snake.body[snake.body.length-2];     // object just before the head is the neck
 
@@ -171,17 +170,17 @@ function SnakeDraw(){
         case 'Down':
             if(!snake.stuck){
                 ctx.fillRect(head.x*tilesize, (head.y*tilesize), tilesize, moveincrement*snake.timer);
-            } else ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
+            } else ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize);
             break;
 
         case 'Right':
             if(!snake.stuck){
                 ctx.fillRect((head.x*tilesize), head.y*tilesize, moveincrement*snake.timer, tilesize);
-            } else ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
+            } else ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize);
             break;
 
         default:
-            console.log("ERR")
+            console.log("ERR");
             break;
     }}
     if(snake.moving==false){
@@ -192,7 +191,7 @@ function SnakeDraw(){
     let tail = snake.body[0];
     let hip = snake.lasttail;
     // let hip = snake.body[1];
-    let _snaketimer = -(gametick-snake.timer)
+    let _snaketimer = -(gametick-snake.timer);
     let _dir;
 
     // CHANGE FROM HIP BASED TO LAST TAIL BASED
@@ -243,7 +242,7 @@ function SnakeDraw(){
 
     //render body
     for(var i=1; i<snake.body.length-1; i++){
-        ctx.fillRect(snake.body[i].x*tilesize, snake.body[i].y*tilesize, tilesize, tilesize)
+        ctx.fillRect(snake.body[i].x*tilesize, snake.body[i].y*tilesize, tilesize, tilesize);
     }
 }
 
