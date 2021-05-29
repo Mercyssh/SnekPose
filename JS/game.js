@@ -6,7 +6,7 @@ var ctx = room.getContext('2d');
 // SETUP THE ROOM
 const gametick = 10;            // speed of the game. lower = faster
 const gridsize = 15;            // defines the size of the grids (rows x column)
-const startsnakesize = 4;       // defines starting snake size
+const startsnakesize = 4;       // defines starting snake size - Must be, x >= 2
 const tilesize = room.width/gridsize;   // size of each individual grid tile
 
 
@@ -179,11 +179,38 @@ function SnakeDraw(){
 
     // render tail
     let tail = snake.body[0];
-    
+    let hip = snake.body[1];
+    let _dir;
+    if(tail.x==hip.x && tail.y<hip.y) _dir="Down";
+    if(tail.x==hip.x && tail.y>hip.y) _dir="Up";
+    if(tail.y==hip.y && tail.x<hip.x) _dir="Right";
+    if(tail.y==hip.y && tail.x>hip.x) _dir="Left";
 
+    if(snake.moving){
+        switch(_dir){
+            case "Up":
+
+                break;
+
+            case "Left":
+
+                break;
+
+            case "Down":
+
+                break;
+
+            case "Right":
+                // ctx.fillRect((tail.x*tilesize)+tilesize, tail.y*tilesize, (moveincrement*snake.timer)+tilesize, tilesize)
+                break;
+        }
+    } else {
+        //Draw tile
+        ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
+    }
 
     //render body
-    for(var i=0; i<snake.body.length-1; i++){
+    for(var i=1; i<snake.body.length-1; i++){
         ctx.fillRect(snake.body[i].x*tilesize, snake.body[i].y*tilesize, tilesize, tilesize)
     }
 }
