@@ -177,6 +177,11 @@ function SnakeDraw(){
         ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
     }
 
+    // render tail
+    let tail = snake.body[0];
+    
+
+
     //render body
     for(var i=0; i<snake.body.length-1; i++){
         ctx.fillRect(snake.body[i].x*tilesize, snake.body[i].y*tilesize, tilesize, tilesize)
@@ -188,6 +193,7 @@ function main(deltaTime){
 
     // handle snake
     SnakeStep(); SnakeDraw();
+    // 
 
     // recall the loop
     window.requestAnimationFrame(main);
