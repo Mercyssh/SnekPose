@@ -1,73 +1,40 @@
-// GET CANVAS OBJECT
-const room = document.getElementById('room');
-var ctx = room.getContext('2d');
+/*
+This file is responsible for setting up
+the Create, Step, and Draw functions for
+the snake object
 
-// SETUP THE ROOM
-const gametick = 10;            // speed of the game. lower = faster
-const gridsize = 15;            // defines the size of the grids (rows x column)
-const startsnakesize = 5;       // defines starting snake size - Must be, x >= 2
-const tilesize = room.width/gridsize;   // size of each individual grid tile
-
-
-// RECIEVE AND HANDLE INPUT
-var input = '';     // string to keep track of last pressed button
-window.addEventListener('keydown', function(e) {
-
-    // listen for arrow keys and wasd. Set input to appropriate value
-    if(e.key=='ArrowUp' || e.key=='ArrowLeft' || e.key=='ArrowDown' || e.key=='ArrowRight')
-        input = e.key.replace('Arrow', '');
-    else { 
-        if(e.key=='w') input='Up'; 
-        if(e.key=='a') input='Left';
-        if(e.key=='s') input='Down';
-        if(e.key=='d') input='Right';
-    }
-
-})
-window.addEventListener('keyup', function(e) {
-
-    // clear input when keys are lifted
-    if(input=='Up')
-        if(e.key=='w' || e.key=='ArrowUp')
-            input='';
-    if(input=='Left')
-        if(e.key=='a' || e.key=='ArrowLeft')
-            input='';
-    if(input=='Down')
-        if(e.key=='s' || e.key=='ArrowDown')
-            input='';
-    if(input=='Right')
-        if(e.key=='d' || e.key=='ArrowRight')
-            input='';
-    
-})
+It mostly handles Snake movement, Smooth drawing, etc.
+*/
 
 // DEFINE SNAKE OBJECT
-// generate initial body
-var _body = [];
-_u = 0;
-for(var i=startsnakesize-1; i>=0; i--){
-    _body[i] = {x:(Math.floor(gridsize/2))+1 - _u, y:Math.floor(gridsize/2)}
-    _u++;
-}
-delete(_u);
+var snake = {};
+function SnakeCreate(){
+    let _body = [];
+    let _u = 0;
+    // generate initial body
+    for(var i=startsnakesize-1; i>=0; i--){
+        _body[i] = {x:(Math.floor(gridsize/2))+1 - _u, y:Math.floor(gridsize/2)}
+        _u++;
+    }
 
-// create snake
-var snake = {
-    body: _body,
-    length: startsnakesize,
-    health: 3,
-    direction: '',
-    lastdir: 'Right',
-    lasttail: {},
-    stuck: false,
-    moving: false,
-    timer: 0,
+    // create snake
+    snake = {
+        body: _body,
+        length: startsnakesize,
+        health: 3,
+        direction: '',
+        lastdir: 'Right',
+        lasttail: {},
+        stuck: false,
+        moving: false,
+        timer: 0,
+    }
 }
-
+SnakeCreate();
 
 // SNAKE LOGIC
 function SnakeStep(){
+    // console.log("here")
 
     snake.direction = input;
 
@@ -246,14 +213,4 @@ function SnakeDraw(){
     }
 }
 
-// EXECUTE GAME LOOP
-function main(deltaTime){
 
-    // handle snake
-    SnakeStep(); SnakeDraw();
-    // 
-
-    // recall the loop
-    window.requestAnimationFrame(main);
-}
-window.requestAnimationFrame(main);
