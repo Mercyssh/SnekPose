@@ -136,11 +136,11 @@ function SnakeDraw(){
 
     // draw the Snake
     // we render head, body and tail separately to make it look like they move smoothly
-    ctx.fillStyle = '#22AA00';
-        
+    
     let moveincrement = tilesize/gametick; //Gives size of each increment to be made for a smooth transition
 
     // render head
+    ctx.fillStyle = '#22AA00';
     let head = snake.body[snake.body.length-1];
     let neck = snake.body[snake.body.length-2];
     if(snake.moving){
@@ -170,7 +170,7 @@ function SnakeDraw(){
             break;
 
         default:
-            console.log("ERR")
+            console.log("ERR") //This is not happen. If this happens god help you
             break;
     }}
     if(snake.moving==false){
@@ -180,6 +180,7 @@ function SnakeDraw(){
     // render tail
     let tail = snake.body[0];
     let hip = snake.body[1];
+    let _snaketimer = -(gametick-snake.timer)
     let _dir;
     if(tail.x==hip.x && tail.y<hip.y) _dir="Down";
     if(tail.x==hip.x && tail.y>hip.y) _dir="Up";
@@ -189,23 +190,26 @@ function SnakeDraw(){
     if(snake.moving){
         switch(_dir){
             case "Up":
-
+                ctx.fillRect(tail.x*tilesize, (tail.y)*tilesize, tilesize, (-moveincrement*_snaketimer)+tilesize);
                 break;
 
             case "Left":
-
+                ctx.fillRect((tail.x+1)*tilesize, tail.y*tilesize, (-moveincrement*_snaketimer), tilesize)
+                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
                 break;
 
             case "Down":
-
+                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, (moveincrement*_snaketimer))
+                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
                 break;
 
             case "Right":
-                // ctx.fillRect((tail.x*tilesize)+tilesize, tail.y*tilesize, (moveincrement*snake.timer)+tilesize, tilesize)
+                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, moveincrement*_snaketimer, tilesize)
+                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
                 break;
         }
     } else {
-        //Draw tile
+        //Draw stagnant tile
         ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
     }
 
