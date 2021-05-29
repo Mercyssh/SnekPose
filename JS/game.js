@@ -60,6 +60,8 @@ var snake = {
     health: 3,
     direction: '',
     lastdir: 'Right',
+    lasttail: {},
+    stuck: false,
     moving: false,
     timer: 0,
 }
@@ -95,30 +97,38 @@ function SnakeStep(){
             switch(snake.direction){
                 case 'Up':
                     if(!(neck.x==head.x && head.y>neck.y)){
+                        snake.stuck=false;                      // Saves if snake is stuck or not. Used in Drawing the Snake
                         snake.body.push({x:head.x, y:head.y-1});
+                        snake.lasttail=snake.body[0];           // Save the position of tail before deleting it. Used in Smooth Drawing of Snake Movement
                         snake.body.shift();
-                    }
+                    }    else snake.stuck=true;
                     break;
     
                 case 'Left':
                     if(!(neck.x<head.x && head.y==neck.y)){
+                        snake.stuck=false;
                         snake.body.push({x:head.x-1, y:head.y});
+                        snake.lasttail=snake.body[0];
                         snake.body.shift();
-                    }
+                    } else snake.stuck=true;
                     break;
                 
                 case 'Down':
                     if(!(neck.x==head.x && head.y<neck.y)){
+                        snake.stuck=false;
                         snake.body.push({x:head.x, y:head.y+1});
+                        snake.lasttail=snake.body[0];
                         snake.body.shift();
-                    }
+                    } else snake.stuck=true;
                     break;
     
                 case 'Right':
                     if(!(neck.x>head.x && head.y==neck.y)){
+                        snake.stuck=false;
                         snake.body.push({x:head.x+1, y:head.y});
+                        snake.lasttail=snake.body[0];
                         snake.body.shift();
-                    }
+                    } else snake.stuck=true;
                     break;
                 
                 default:
@@ -137,7 +147,7 @@ function SnakeDraw(){
     // draw the Snake
     // we render head, body and tail separately to make it look like they move smoothly
     
-    let moveincrement = tilesize/gametick; //Gives size of each increment to be made for a smooth transition
+    let moveincrement = tilesize/gametick;  //Gives size of each increment to be made for a smooth transition
 
     // render head
     ctx.fillStyle = '#22AA00';
@@ -170,7 +180,7 @@ function SnakeDraw(){
             break;
 
         default:
-            console.log("ERR") //This is not happen. If this happens god help you
+            console.log("ERR")
             break;
     }}
     if(snake.moving==false){
@@ -179,37 +189,54 @@ function SnakeDraw(){
 
     // render tail
     let tail = snake.body[0];
-    let hip = snake.body[1];
+    let hip = snake.lasttail;
+    // let hip = snake.body[1];
     let _snaketimer = -(gametick-snake.timer)
     let _dir;
-    if(tail.x==hip.x && tail.y<hip.y) _dir="Down";
-    if(tail.x==hip.x && tail.y>hip.y) _dir="Up";
-    if(tail.y==hip.y && tail.x<hip.x) _dir="Right";
-    if(tail.y==hip.y && tail.x>hip.x) _dir="Left";
+
+    // CHANGE FROM HIP BASED TO LAST TAIL BASED
+    if(tail.x==hip.x && tail.y<hip.y) _dir="Up";
+    if(tail.x==hip.x && tail.y>hip.y) _dir="Down";
+    if(tail.y==hip.y && tail.x<hip.x) _dir="Left";
+    if(tail.y==hip.y && tail.x>hip.x) _dir="Right";
 
     if(snake.moving){
         switch(_dir){
             case "Up":
-                ctx.fillRect(tail.x*tilesize, (tail.y)*tilesize, tilesize, (-moveincrement*_snaketimer)+tilesize);
+                if(!snake.stuck)
+                    ctx.fillRect(tail.x*tilesize, (tail.y)*tilesize, tilesize, (-moveincrement*_snaketimer)+tilesize);
+                else
+                    ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
                 break;
 
             case "Left":
-                ctx.fillRect((tail.x+1)*tilesize, tail.y*tilesize, (-moveincrement*_snaketimer), tilesize)
-                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
+                if(!snake.stuck)
+                    ctx.fillRect((tail.x)*tilesize, tail.y*tilesize, tilesize+(-moveincrement*_snaketimer), tilesize)
+                else
+                    ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
                 break;
 
             case "Down":
-                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, (moveincrement*_snaketimer))
-                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
+                if(!snake.stuck)
+                    ctx.fillRect(tail.x*tilesize, (tail.y+1)*tilesize, tilesize, -tilesize+(moveincrement*_snaketimer))
+                else
+                    ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
                 break;
 
             case "Right":
-                ctx.fillRect(tail.x*tilesize, tail.y*tilesize, moveincrement*_snaketimer, tilesize)
+                if(!snake.stuck){
+                    ctx.fillRect((tail.x+1)*tilesize, tail.y*tilesize, (moveincrement*_snaketimer)-tilesize, tilesize);
+                } else {
+                    ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
+                }
+                break;
+
+            default:
                 ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
                 break;
         }
     } else {
-        //Draw stagnant tile
+        //Draw stagnant tile when snake is not moving
         ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
     }
 
