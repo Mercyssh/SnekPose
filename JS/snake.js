@@ -6,8 +6,13 @@ the snake object
 It mostly handles Snake movement, Smooth drawing, etc.
 */
 
+// DEFINE CONTROL VARIABLES
+const startsnakesize = 5;       // defines starting snake size - Must be, x >= 2
+const maxsnakesize = 10       //Controls the maximum number of length a snake can grow to. Pellets won't spawn beyond this point
+
 // DEFINE SNAKE OBJECT
 var snake = {};
+var snakeface;      //Image for snake's face
 function SnakeCreate(){
     let _body = [];
     let _u = 0;
@@ -29,6 +34,9 @@ function SnakeCreate(){
         moving: false,
         timer: 0,
     }
+
+    // snakeface = new Image();
+    // snakeface.src = '../ASSETS/snakeface.png';
 }
 SnakeCreate();
 
@@ -112,8 +120,7 @@ function SnakeDraw(){
     ctx.clearRect(0,0, room.width, room.height);
 
     // draw the Snake
-    // we render head, body and tail separately to make it look like they move smoothly
-    
+    // we render head, body and tail separately to make it look like they move smoothly 
     let moveincrement = tilesize/gametick;  //Gives size of each increment to be made for a smooth transition
 
     // render head
@@ -153,6 +160,7 @@ function SnakeDraw(){
     if(snake.moving==false){
         ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
     }
+    // ctx.drawImage(snakeface, head.x*tilesize, head.y*tilesize);
 
     // render tail
     let tail = snake.body[0];

@@ -15,7 +15,9 @@ function main(deltaTime){
 
     // handle snake
     SnakeStep(); SnakeDraw();
-    // console.log(snake.body)
+
+    // handle pellets
+    PelletStep(); PelletDraw();
 
     // recall the loop
     window.requestAnimationFrame(main);

@@ -8,8 +8,10 @@
         <div class="gamecontainer">
             <canvas id="room" width="500" height="500"></canvas>
         </div>
-        <script src="JS/roomsetup.js"></script>
-        <script src="JS/snake.js"></script>
-        <script src="JS/rungame.js"></script>
+        <script src="JS/roomsetup.js"></script>     <!--Controls some intrinsic game variables, such as speed, starting snake size, grid size, etc-->
+        <script src="JS/snake.js"></script>         <!--Handles everything about the snake. Movement, Drawing, etc-->
+        <script src="JS/pellets.js"></script>       <!--Handles creation, and eating of pellets-->
+        <script src="JS/poses.js"></script>         <!--Handles creation, and finishing of poses-->
+        <script src="JS/rungame.js"></script>       <!--Main Game loop, calls all function declared in above scripts-->
     </body>
 </html>

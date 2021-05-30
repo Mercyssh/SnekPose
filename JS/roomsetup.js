@@ -4,7 +4,6 @@ It is also responsible for setting up any recurring functions
 and also for controlling some basic parameters
 */
 
-
 // GET CANVAS OBJECT
 const room = document.getElementById('room');
 var ctx = room.getContext('2d');
@@ -12,7 +11,7 @@ var ctx = room.getContext('2d');
 // SETUP THE ROOM
 const gametick = 10;            // speed of the game. lower = faster
 const gridsize = 15;            // defines the size of the grids (rows x column)
-const startsnakesize = 5;       // defines starting snake size - Must be, x >= 2
+const maxposesonscreen = 2      // sets the maximum number of poses which can be on screen at a time
 const tilesize = room.width/gridsize;   // size of each individual grid tile
 
 // RECIEVE AND HANDLE INPUT
@@ -49,3 +48,19 @@ window.addEventListener('keyup', function(e) {
 })
 
 // DECLARE FUNCTIONS HERE
+// if 'x' is within 'r' range of 'n', returns true, else false 
+function within(x, r, n){
+    if(x>=n-r && x<=n+r)
+        return true;
+    else
+        return false;
+}
+
+// Returns a random value between min, and max range. 3rd Optional Parameter is used incase you want a rounded value 
+function randomrange(min, max, whole){
+    let range = Math.abs(max-min);
+    if(!whole)
+        return min+(Math.random()*range);
+    else
+        return Math.round(min+(Math.random()*range));
+}
