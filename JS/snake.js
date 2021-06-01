@@ -7,7 +7,7 @@ It mostly handles Snake movement, Smooth drawing, etc.
 */
 
 // DEFINE CONTROL VARIABLES
-const startsnakesize = 5;       // defines starting snake size - Must be, x >= 2
+const startsnakesize = 6;       // defines starting snake size - Must be, x >= 2
 const maxsnakesize = 10       //Controls the maximum number of length a snake can grow to. Pellets won't spawn beyond this point
 
 // DEFINE SNAKE OBJECT
@@ -73,8 +73,9 @@ function SnakeStep(){
                         snake.stuck=false;                          // Saves if snake is stuck or not. Used in Drawing the Snake
                         snake.body.push({x:head.x, y:head.y-1});    // Update head location
                         snake.lasttail=snake.body[0];               // Save the position of tail before deleting it. Used in Smooth Drawing of Snake Movement
-                        snake.body.shift();                         // Delete old tail
-                    }    else snake.stuck=true;
+                        if(snake.length<snake.body.length)
+                            snake.body.shift();                     // Delete old tail if length is equal to target or more
+                    } else snake.stuck=true;
                     break;
     
                 case 'Left':
@@ -82,7 +83,8 @@ function SnakeStep(){
                         snake.stuck=false;
                         snake.body.push({x:head.x-1, y:head.y});
                         snake.lasttail=snake.body[0];
-                        snake.body.shift();
+                        if(snake.length<snake.body.length)
+                            snake.body.shift();
                     } else snake.stuck=true;
                     break;
                 
@@ -91,7 +93,8 @@ function SnakeStep(){
                         snake.stuck=false;
                         snake.body.push({x:head.x, y:head.y+1});
                         snake.lasttail=snake.body[0];
-                        snake.body.shift();
+                        if(snake.length<snake.body.length)
+                            snake.body.shift();
                     } else snake.stuck=true;
                     break;
     
@@ -100,7 +103,8 @@ function SnakeStep(){
                         snake.stuck=false;
                         snake.body.push({x:head.x+1, y:head.y});
                         snake.lasttail=snake.body[0];
-                        snake.body.shift();
+                        if(snake.length<snake.body.length)
+                            snake.body.shift();
                     } else {
                         snake.stuck=true;
                     }
@@ -253,7 +257,8 @@ function SnakeDraw(){
     }
 }
 
-/* ANY ADDITIONAL FUNCTIONS
+//ANY ADDITIONAL FUNCTIONS
+/* draws the face of the snake at the appropriate position. also takes care of scaling 
 Example of use : 
 drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, -0, snakeface); */
 function drawface(x, y, dir, img, flip){
@@ -287,4 +292,17 @@ function drawface(x, y, dir, img, flip){
     //Reset matrix and color
     ctx.fillStyle = _fillstyle
     ctx.setTransform(1, 0, 0, 1, 0, 0);
+}
+
+function bitecheck(){
+
+    let head = snake.body[snake.body.length-1];     // last object in body array is head
+    let headindex = snake.body.findIndex(val => val.x==head.x && val.y==head.y)     // find index of any element which is the same as head
+
+    //If the postion of head repeats twice in the body, snake has bit itself
+    if(headindex != snake.body.length-1)
+        return headindex;
+    else
+        return -1;
+
 }
