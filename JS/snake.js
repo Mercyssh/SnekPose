@@ -7,7 +7,7 @@ It mostly handles Snake movement, Smooth drawing, etc.
 */
 
 // DEFINE CONTROL VARIABLES
-const startsnakesize = 6;       // defines starting snake size - Must be, x >= 2
+const startsnakesize = 5;       // defines starting snake size - Must be, x >= 2
 const maxsnakesize = 10       //Controls the maximum number of length a snake can grow to. Pellets won't spawn beyond this point
 
 // DEFINE SNAKE OBJECT
@@ -54,10 +54,12 @@ function SnakeStep(){
             snake.timer=0;
         }
     }
+    
     // update snake body when timer runs out
     if(snake.moving==false){
+
+        //Save last direction the snake was travelling in. Used in drawing
         if(input!=''){
-            //Save last direction the snake was travelling in. Used in drawing
             snake.lastdir=snake.direction;
         }
 
@@ -294,6 +296,7 @@ function drawface(x, y, dir, img, flip){
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 }
 
+//Checks is snake is biting itself
 function bitecheck(){
 
     let head = snake.body[snake.body.length-1];     // last object in body array is head
