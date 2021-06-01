@@ -16,10 +16,11 @@ pellet = {
 
 // HANDLE PELLET LOGIC
 function PelletStep(){
+
     //If Pellet is not active
     if(!pellet.active){
         
-
+        
     }
     //If Pellet is active
     else {

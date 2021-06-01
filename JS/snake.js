@@ -35,8 +35,8 @@ function SnakeCreate(){
         timer: 0,
     }
 
-    // snakeface = new Image();
-    // snakeface.src = '../ASSETS/snakeface.png';
+    snakeface = new Image();
+    snakeface.src = '../ASSETS/snakeface.png';
 }
 SnakeCreate();
 
@@ -160,7 +160,7 @@ function SnakeDraw(){
     if(snake.moving==false){
         ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
     }
-    // ctx.drawImage(snakeface, head.x*tilesize, head.y*tilesize);
+    drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, -0, snakeface);
 
     // render tail
     let tail = snake.body[0];
@@ -221,4 +221,31 @@ function SnakeDraw(){
     }
 }
 
+// ANY ADDITIONAL FUNCTIONS
+function drawface(x, y, dir, img){
+    let _fillstyle = ctx.fillStyle
 
+    //Handle Positioning wrt scaled
+    let yratio = 33.33/-10;
+    let _y = tilesize/yratio;
+
+    //Handle sizes wrt scaled
+    let width = img.width;
+    let height = img.height;
+    let wratio = 33.33/width;
+    let hratio = 33.33/height;
+    let _h = tilesize/hratio;
+    let _w = tilesize/wratio;
+
+    //Handle rotations
+    ctx.translate(x, y);
+    ctx.rotate(dir*Math.PI/180);
+    ctx.translate(-x, -y);
+
+    //Handle Image Drawing
+    ctx.drawImage(img, x, y+_y, _w, _h);
+    
+    //Reset matrix and color
+    ctx.fillStyle = _fillstyle
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+}
