@@ -121,55 +121,16 @@ function SnakeDraw(){
 
     // draw the Snake
     // we render head, body and tail separately to make it look like they move smoothly 
-    let moveincrement = tilesize/gametick;  //Gives size of each increment to be made for a smooth transition
+    let moveincrement = tilesize/gametick;          //Gives size of each increment to be made for a smooth transition
+    let head = snake.body[snake.body.length-1];     //Gives head body part
+    let neck = snake.body[snake.body.length-2];     //Gives the part just behind the head
+    let tail = snake.body[0];       //Gives the tail body part
+    let hip = snake.lasttail;       //Gives where the tail was in the last tick
 
-    // render head
-    ctx.fillStyle = '#22AA00';
-    let head = snake.body[snake.body.length-1];
-    let neck = snake.body[snake.body.length-2];
-    if(snake.moving){
-    switch(snake.lastdir){
-        case 'Up':
-            if(!snake.stuck){
-                ctx.fillRect(head.x*tilesize, (head.y*tilesize)+tilesize, tilesize, -moveincrement*snake.timer);
-            } else ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
-            break;
-
-        case 'Left':
-            if(!snake.stuck){
-                ctx.fillRect((head.x*tilesize)+tilesize, head.y*tilesize, -moveincrement*snake.timer, tilesize);
-            } else ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
-            break;
-
-        case 'Down':
-            if(!snake.stuck){
-                ctx.fillRect(head.x*tilesize, (head.y*tilesize), tilesize, moveincrement*snake.timer);
-            } else ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize);
-            break;
-
-        case 'Right':
-            if(!snake.stuck){
-                ctx.fillRect((head.x*tilesize), head.y*tilesize, moveincrement*snake.timer, tilesize);
-            } else ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize);
-            break;
-
-        default:
-            console.log("ERR");
-            break;
-    }}
-    if(snake.moving==false){
-        ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
-    }
-    drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, -0, snakeface);
-
-    // render tail
-    let tail = snake.body[0];
-    let hip = snake.lasttail;
-    // let hip = snake.body[1];
+    // RENDER TAIL
     let _snaketimer = -(gametick-snake.timer);
     let _dir;
 
-    // CHANGE FROM HIP BASED TO LAST TAIL BASED
     if(tail.x==hip.x && tail.y<hip.y) _dir="Up";
     if(tail.x==hip.x && tail.y>hip.y) _dir="Down";
     if(tail.y==hip.y && tail.x<hip.x) _dir="Left";
@@ -211,18 +172,91 @@ function SnakeDraw(){
                 break;
         }
     } else {
-        //Draw stagnant tile when snake is not moving
+        // Draw stagnant tile when snake is not moving
         ctx.fillRect(tail.x*tilesize, tail.y*tilesize, tilesize, tilesize)
     }
 
-    //render body
+    // RENDER BODY
     for(var i=1; i<snake.body.length-1; i++){
         ctx.fillRect(snake.body[i].x*tilesize, snake.body[i].y*tilesize, tilesize, tilesize);
     }
+
+    // RENDER HEAD
+    ctx.fillStyle = '#22AA00';
+    if(snake.moving){
+    switch(snake.lastdir){
+        case 'Up':
+            if(!snake.stuck){
+                ctx.fillRect(head.x*tilesize, (head.y*tilesize)+tilesize, tilesize, -moveincrement*snake.timer);
+                drawface((head.x*tilesize)+tilesize/2, (((head.y+1)*tilesize)+tilesize/2)-moveincrement*snake.timer, -90, snakeface);
+            } else {
+                ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
+            }
+            break;
+
+        case 'Left':
+            if(!snake.stuck){
+                ctx.fillRect((head.x*tilesize)+tilesize, head.y*tilesize, -moveincrement*snake.timer, tilesize);
+                drawface((((head.x+1)*tilesize)+tilesize/2)-moveincrement*snake.timer, (head.y*tilesize)+tilesize/2, 0, snakeface, true);
+            } else {
+                ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize);
+            }
+            break;
+
+        case 'Down':
+            if(!snake.stuck){
+                ctx.fillRect(head.x*tilesize, (head.y*tilesize), tilesize, moveincrement*snake.timer);
+                drawface((head.x*tilesize)+tilesize/2, (((head.y-1)*tilesize)+tilesize/2)+moveincrement*snake.timer, 90, snakeface, false);
+            } else {
+                ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize);
+            }
+            break;
+
+        case 'Right':
+            if(!snake.stuck){
+                ctx.fillRect((head.x*tilesize), head.y*tilesize, moveincrement*snake.timer, tilesize);
+                drawface((((head.x-1)*tilesize)+tilesize/2)+moveincrement*snake.timer, (head.y*tilesize)+tilesize/2, -0, snakeface);
+            } else {
+                ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize);
+            }
+            break;
+
+        default:
+            console.log("ERR");
+            break;
+    }}
+
+    // draw static head and face when idle
+    if(snake.moving==false){
+        ctx.fillRect(head.x*tilesize, head.y*tilesize, tilesize, tilesize)
+        switch(snake.lastdir){
+            case "Up":
+                drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, -90, snakeface, false);
+                break;
+
+            case "Left":
+                drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, 0, snakeface, true);
+                break; 
+                
+            case "Right":
+                drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, -0, snakeface, false);
+                break;
+
+            case "Down":
+                drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, 90, snakeface, false);
+                break;
+
+            default:
+                drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, -0, snakeface, false);
+                break;
+        }
+    }
 }
 
-// ANY ADDITIONAL FUNCTIONS
-function drawface(x, y, dir, img){
+/* ANY ADDITIONAL FUNCTIONS
+Example of use : 
+drawface((head.x*tilesize)+tilesize/2, (head.y*tilesize)+tilesize/2, -0, snakeface); */
+function drawface(x, y, dir, img, flip){
     let _fillstyle = ctx.fillStyle
 
     //Handle Positioning wrt scaled
@@ -236,10 +270,15 @@ function drawface(x, y, dir, img){
     let hratio = 33.33/height;
     let _h = tilesize/hratio;
     let _w = tilesize/wratio;
-
-    //Handle rotations
+    
+    //Handle transformations applied on the image.
     ctx.translate(x, y);
+
+    //Start transforms
     ctx.rotate(dir*Math.PI/180);
+    if(flip) ctx.scale(-1,1);
+    //End transforms
+    
     ctx.translate(-x, -y);
 
     //Handle Image Drawing
