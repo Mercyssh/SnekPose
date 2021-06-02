@@ -11,7 +11,6 @@ var ctx = room.getContext('2d');
 // SETUP THE ROOM
 const gametick = 10;            // speed of the game. lower = faster
 const gridsize = 15;            // defines the size of the grids (rows x column)
-const maxposesonscreen = 2      // sets the maximum number of poses which can be on screen at a time
 const tilesize = room.width/gridsize;   // size of each individual grid tile
 
 // RECIEVE AND HANDLE INPUT

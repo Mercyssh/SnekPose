@@ -144,6 +144,7 @@ function SnakeDraw(){
     let hip = snake.lasttail;       //Gives where the tail was in the last tick
 
     // RENDER TAIL
+    ctx.fillStyle = '#22AA00';
     let _snaketimer = -(gametick-snake.timer);
     let _dir;
 

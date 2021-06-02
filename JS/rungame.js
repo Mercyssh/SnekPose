@@ -23,6 +23,9 @@ function main(deltaTime){
     // handle pellets
     PelletStep(); PelletDraw();
 
+    // handle poses
+    PoseStep(); PoseDraw();
+
     // update ui
     UIUpdate();
 
