@@ -4,7 +4,7 @@ This .js file handles the pellet object. Its spawning and its consumption
 
 // DEFINE CONTROL VARIABLES
 const pelletlifesize = 500          //Controls the life of a pellet. Higher = Longer
-const spawntimerrange = [200,400]  //Controls the interval between each pellet spawn. 
+const spawntimerrange = [800,1200]  //Controls the interval between each pellet spawn. 
 
 //INITIALIZE THE PELLET
 var pellet, _deg=0;
@@ -70,12 +70,12 @@ function PelletDraw(){
 //checks if the head is on the pellet
 function eatpellet(){
     let head = snake.body[snake.body.length-1];
-    console.log('bruh');
     if(head.x == pellet.pos.x && head.y == pellet.pos.y){
         deactivate();
         snake.health+=.5;
         snake.length+=1;
     }
+    window.dispatchEvent(healthupdate);
 }
 
 // Deactivate Pellet
