@@ -23,6 +23,9 @@ function main(deltaTime){
     // handle pellets
     PelletStep(); PelletDraw();
 
+    // update ui
+    UIUpdate();
+
     // recall the loop
     window.requestAnimationFrame(main);
 }
