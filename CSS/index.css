@@ -34,7 +34,7 @@ body{
 #pellettimer{
     width: 24px;
     height: 24px;
-    background: conic-gradient(#131913 40deg, #2BD600 0);
+    background: conic-gradient(#131913 0deg, #2BD600 0);
     border-radius: 50%;
 }
 
