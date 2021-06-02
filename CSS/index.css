@@ -36,7 +36,6 @@ body{
     height: 24px;
     background: conic-gradient(#131913 40deg, #2BD600 0);
     border-radius: 50%;
-    
 }
 
 /* Score */
@@ -107,9 +106,9 @@ body{
 }
 /* Mozilla */
 #volume::-moz-range-thumb {
-width: 10px; /* Set a specific slider handle width */
-height: 10px; /* Slider handle height */
-border-radius: 50%;
-background: #22AA00; /* Green background */
-cursor: pointer; /* Cursor on hover */
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
+    border-radius: 50%;
+    background: #22AA00; /* Green background */
+    cursor: pointer; /* Cursor on hover */
 }
