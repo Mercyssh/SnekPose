@@ -1,3 +1,8 @@
+@font-face {
+    font-family: ProximaBold;
+    src: url('../ASSETS/ProximaNovaBold.otf');
+}
+
 *{
     box-sizing: border-box;
     margin: 0;
@@ -8,12 +13,43 @@ body{
     background-color: #131913;
 }
 
-.gamecontainer{
+.main{
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     margin: auto;
+}
+
+/* Container for Health, Timer, Score */
+.topinfo{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+#pellettimer{
+    width: 24px;
+    height: 24px;
+    background: conic-gradient(#131913 40deg, #2BD600 0);
+    border-radius: 50%;
+    
+}
+
+.score{
+    font-family: 'ProximaBold';
+    font-size: 21px;
+    text-align: right;
+    line-height: 1em;
+}
+
+#highscore{
+    color: #0E4800;
+}
+
+#currentscore{
+    color: #22AA00;
 }
 
 #room{

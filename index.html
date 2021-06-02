@@ -5,8 +5,19 @@
         <link rel="stylesheet" href="CSS/index.css">
     </head>
     <body>
-        <div class="gamecontainer">
-            <canvas id="room" width="500" height="500"></canvas>
+        <div class="main">
+            <div class="topinfo">
+                <img src="ASSETS/health3.png" alt="" id="health">
+                <div id="pellettimer"></div>
+                <div class="score">
+                    <p id="highscore">0000</p>
+                    <p id="currentscore">00</p>
+                </div>
+            </div>
+            <div class="gamecontainer"><canvas id="room" width="500" height="500"></canvas></div>
+            <div class="bottominfo">
+
+            </div>
         </div>
         <script src="JS/roomsetup.js"></script>     <!--Controls some intrinsic game variables, such as speed, starting snake size, grid size, etc-->
         <script src="JS/snake.js"></script>         <!--Handles everything about the snake. Movement, Drawing, etc-->
