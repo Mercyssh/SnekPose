@@ -72,10 +72,13 @@ function eatpellet(){
     let head = snake.body[snake.body.length-1];
     if(head.x == pellet.pos.x && head.y == pellet.pos.y){
         deactivate();
-        snake.health+=.5;
+        if(snake.health<3)
+            snake.health+=.5;
         snake.length+=1;
+        snake.score+=50;
+        window.dispatchEvent(healthupdate);
+        window.dispatchEvent(scoreupdate);
     }
-    window.dispatchEvent(healthupdate);
 }
 
 // Deactivate Pellet

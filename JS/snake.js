@@ -33,6 +33,7 @@ function SnakeCreate(){
         stuck: false,
         moving: false,
         timer: 0,
+        score: 0
     }
 
     snakeface = new Image();

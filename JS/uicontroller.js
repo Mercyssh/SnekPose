@@ -1,6 +1,9 @@
 // CONTROLS THE UI OUTSIDE THE GAME ROOM - HEALTH, TIMER, SCORE
 var timer = document.getElementById("pellettimer");
 var health = document.getElementById("health");
+var currentscore = document.getElementById("currentscore");
+var highscore = document.getElementById("highscore");
+
 
 // Updates Pellet Despawn Timer
 function UIUpdate(){
@@ -39,3 +42,8 @@ function HealthUpdate(){
     }
 }
 window.addEventListener('healthupdate', HealthUpdate);
+
+function ScoreUpdate(){
+    currentscore.innerHTML = snake.score;
+}
+window.addEventListener('scoreupdate', ScoreUpdate);

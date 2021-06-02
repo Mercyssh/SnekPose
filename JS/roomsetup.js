@@ -68,3 +68,4 @@ function randomrange(min, max, whole){
 // Event fired whenever snake moves successful
 const snakemove = new Event('snakemove');
 const healthupdate = new Event('healthupdate');
+const scoreupdate = new Event('scoreupdate');
