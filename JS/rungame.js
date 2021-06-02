@@ -10,6 +10,10 @@ requestAnimationFrame calls this same function in a loop and gives the browser e
 space between each loop. It handles these spaces on its own which is why its a good idea to use it.
 */
 
+// DEFINE GAME STATE: 0-Menu, 1-In Game, 2-Leaderboard
+var gamestate = 0;
+// ^ Needs to be set up
+
 // EXECUTE GAME LOOP
 function main(deltaTime){
 

@@ -4,6 +4,7 @@
 }
 
 *{
+    font-family: 'ProximaBold';
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -29,6 +30,7 @@ body{
     margin-bottom: 10px;
 }
 
+/* Pellet despawn timer */
 #pellettimer{
     width: 24px;
     height: 24px;
@@ -37,21 +39,77 @@ body{
     
 }
 
+/* Score */
 .score{
-    font-family: 'ProximaBold';
     font-size: 21px;
     text-align: right;
     line-height: 1em;
 }
-
 #highscore{
     color: #0E4800;
 }
-
 #currentscore{
     color: #22AA00;
 }
 
+/* Game window */
 #room{
     border: 1px solid #2BD600;
+}
+
+/* Bottom Container for extra controls */
+.bottominfo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+}
+/* Left half options - Help, Share */
+.left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #22AA00;
+    font-size: 24px;
+    column-gap: 20px;
+}
+#share, #help{
+    cursor: pointer;
+}
+
+/* Right Half options - Volume */
+.right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 10px;
+}
+/* Slider itself */
+#volume {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 70px; /* Set a specific slider handle width */
+    height: 2px; /* Slider handle height */
+    background: #22AA00; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+/* Slider Handle */
+/* Chorme */
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
+    background: #22AA00; /* Green background */
+    border-radius: 50%;
+    cursor: pointer; /* Cursor on hover */
+}
+/* Mozilla */
+#volume::-moz-range-thumb {
+width: 10px; /* Set a specific slider handle width */
+height: 10px; /* Slider handle height */
+border-radius: 50%;
+background: #22AA00; /* Green background */
+cursor: pointer; /* Cursor on hover */
 }
