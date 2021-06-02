@@ -7,7 +7,7 @@ It mostly handles Snake movement, Smooth drawing, etc.
 */
 
 // DEFINE CONTROL VARIABLES
-const startsnakesize = 7;       // defines starting snake size - Must be, x >= 2
+const startsnakesize = 4;       // defines starting snake size - Must be, x >= 2
 const maxsnakesize = 10       //Controls the maximum number of length a snake can grow to. Pellets won't spawn beyond this point
 
 // DEFINE SNAKE OBJECT
@@ -120,6 +120,9 @@ function SnakeStep(){
             if(bitecheck()!=-1){
                 bite(bitecheck());
             }
+
+            // Dispatch snakemove event
+            window.dispatchEvent(snakemove);
         }
     }
 }

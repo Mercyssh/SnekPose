@@ -47,7 +47,7 @@ window.addEventListener('keyup', function(e) {
     
 })
 
-// DECLARE FUNCTIONS HERE
+// DECLARE FUNCTIONS AND EVENTS HERE
 // if 'x' is within 'r' range of 'n', returns true, else false 
 function within(x, r, n){
     if(x>=n-r && x<=n+r)
@@ -64,3 +64,6 @@ function randomrange(min, max, whole){
     else
         return Math.round(min+(Math.random()*range));
 }
+
+// Event fired whenever snake moves successful
+const snakemove = new Event('snakemove');
