@@ -67,7 +67,7 @@ function PoseStep(){
     }
 
     //Scale Difficulty - Dynamically change maxposesonscreen and spawntimer when certain conditions are met
-
+    
 }
 
 // DRAW THE POSES
