@@ -41,8 +41,8 @@ function PoseStep(){
         poses[pose].time--;
         if(poses[pose].time<=0){
             poses.splice(pose,1);
-            window.dispatchEvent(healthupdate);
             snake.health--;
+            window.dispatchEvent(healthupdate);
         } 
 
         // check for collissions
@@ -50,8 +50,10 @@ function PoseStep(){
             let filled = true;
             //loop through pos array and check if tile is not filled
             for(var pos of poses[pose].pos){
-                if(snake.body.findIndex(part => part.x==pos.x && part.y==pos.y)==-1)
+                if(pos.x!==undefined)
+                if(snake.body.findIndex(part => part.x==pos.x && part.y==pos.y)==-1){
                     filled = false;
+                }
             }
             if(filled){
                 //Formula for adding score = time left + (snake.lenght*50)
@@ -103,15 +105,12 @@ function generatepose(){
         let overlap = false;
         
         //if snake is not on tile
-        if(snake.body.findIndex(val => val.x==o.x && val.y==o.y)!=-1){
+        if(snake.body.findIndex(val => val.x==o.x && val.y==o.y)!=-1)
             overlap=true;
-        }
-        
         //if no other pose is on tile
         poses.forEach(obj => {
-            if(obj.pos.findIndex(val => val.x == o.x && val.y == o.y)!=-1){
+            if(obj.pos.findIndex(val => val.x == o.x && val.y == o.y)!=-1)
                 overlap=true;
-            }
         })
 
         //if chosen tile has no overlap, set it as origin
@@ -130,9 +129,10 @@ function generatepose(){
             console.log(last, poseobject.pos[poseobject.pos.length-1],  poseobject.pos, poseobject.pos.length-1)
         }
         let _arr = findemptytile(last.x, last.y, poseobject);
+        if(_arr==-1)
+            break;
         let _target = randomrange(0,_arr.length-1, true);
         poseobject.pos.push(_arr[_target]);
-
     }
 
     return poseobject;

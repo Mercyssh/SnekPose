@@ -4,7 +4,7 @@ This .js file handles the pellet object. Its spawning and its consumption
 
 // DEFINE CONTROL VARIABLES
 const pelletlifesize = 500          //Controls the life of a pellet. Higher = Longer
-const spawntimerrange = [300,400]  //Controls the interval between each pellet spawn. 800-1200
+const spawntimerrange = [100,150]  //Controls the interval between each pellet spawn. 800-1200
 
 //INITIALIZE THE PELLET
 var pellet, _deg=0;
