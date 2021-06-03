@@ -10,19 +10,24 @@ requestAnimationFrame calls this same function in a loop and gives the browser e
 space between each loop. It handles these spaces on its own which is why its a good idea to use it.
 */
 
-// DEFINE GAME STATE: "MENU", "GAME", "LEADERBOARD"
+// DEFINE STARTING GAME STATE: "MENU", "GAME", "LEADERBOARD"
 var gamestate = "GAME";
-// ^ Needs to be set up
+// Leaderboard();
 
-window.addEventListener('changestate', e =>{
+// Changes state of the game
+function changestate(){
     if(gamestate=="MENU"){
         gamestate = "GAME";
         window.requestAnimationFrame(main);
-    }
-    if(gamestate=="GAME"){
+    } 
+    else if(gamestate=="GAME"){
         gamestate = "LEADERBOARD";
+        Leaderboard();
+    } 
+    else if(gamestate=="LEADERBOARD"){
+        location.reload();
     }
-})
+}
 
 // EXECUTE GAME LOOP
 function main(deltaTime){

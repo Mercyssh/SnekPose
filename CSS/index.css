@@ -12,9 +12,15 @@
 
 body{
     background-color: #131913;
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
 }
 
+
+/* GAME */
+/* Container for the game */
 .main{
+    display: block;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -113,3 +119,94 @@ body{
     cursor: pointer; /* Cursor on hover */
 }
 
+
+/* LEADERBOARD */
+/* Container for the leaderboard */
+.leaderboard{
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    width: max-content;
+}
+
+/* Container for input forms */
+.inputpage{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+/* Input Field */
+.inputpage p{
+    color: #22AA00;
+    font-size: 25px;
+}
+.initials, #score{
+    color: #FF8DDF;
+}
+.initials{
+    outline: none;
+    background: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: 4px solid #FF8DDF;
+    text-align: center;
+    width: 30px;
+    font-size: 25px;
+    text-transform:uppercase;
+}
+
+/* style prompt */
+.prompt{
+    color: #575757 !important;
+    font-size: 20px !important;
+}
+.alert{
+    color: #b92e2e !important;
+    font-size: 20px !important;
+}
+
+/* Results Page */
+.resultspage{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#rank1{
+    color: #FFD336;
+}
+#rank2{
+    color: #E3E3E3;
+}
+#rank3{
+    color: #CB5500;
+}
+.rank{
+    width: max-content;
+}
+.name{
+    width: max-content;
+}
+.scr{
+    width: 30px;
+}
+.sep{
+    padding: 20px 0;
+}
+.sep div{
+    height: 1px;
+    width: 100%;
+    background: white;
+}
+#rankx{
+    color: #575757;
+}
+#lb{
+    font-size: 25px;
+    width: 300px;
+}

@@ -127,6 +127,12 @@ function SnakeStep(){
             window.dispatchEvent(snakemove);
         }
     }
+
+    // stop game if health is 0
+    if(snake.health<=0){
+        console.log('changestate')
+        changestate();
+    }
 }
 
 // DRAW THE SNAKE

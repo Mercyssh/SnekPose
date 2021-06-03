@@ -5,9 +5,12 @@
         <link rel="stylesheet" href="CSS/index.css">
     </head>
     <body>
-        <div class="menu"></div>
 
-        <div class="main">
+        <!-- MAIN MENU -->
+        <div class="menu" id="menu"></div>
+
+        <!-- GAME -->
+        <div class="main" id="main">
 
             <!-- Info like health, pellet despawn timer, Score etc -->
             <div class="topinfo">
@@ -36,15 +39,75 @@
 
         </div>
 
-        <div class="leaderboard"></div>
-        
+        <!-- LEADERBOARD -->
+        <div class="leaderboard" id="leaderboard">
 
+            <div class="inputpage" id="inputpage">
+                <p>Enter your Initials</p>
 
-        <!-- FIREBASE MANAGEMENT -->
+                <!-- Only allow A-Z -->
+                <div id="nameinput">
+                    <input type="text" class="initials" maxlength="1" onkeypress="return (event.charCode > 64 && 
+                    event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)">
+                    <input type="text" class="initials" maxlength="1" onkeypress="return (event.charCode > 64 && 
+                    event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)">
+                    <input type="text" class="initials" maxlength="1" onkeypress="return (event.charCode > 64 && 
+                    event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)">
+                    <input type="text" class="initials" maxlength="1" onkeypress="return (event.charCode > 64 && 
+                    event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)">
+                </div><br>
+                <p class="alert" id="alrt">Please enter all 4 Initials !</p><br>
+
+                <p>Your Score</p>
+                <p id="score">2000</p><br>
+
+                <p class="prompt">Press Enter to see Leaderboards</p>
+            </div>
+
+            <div class="resultspage" id="resultspage">
+                <table id="lb">
+                    <tr id='rank1'>
+                        <td class="rank">1</td>
+                        <td class="name">SNJN</td>
+                        <td class="scr">4400</td>
+                    </tr>
+
+                    <tr id='rank2'>
+                        <td class="rank">2</td>
+                        <td class="name">KLAM</td>
+                        <td class="scr">1123</td>
+                    </tr>
+
+                    <tr id='rank3'>
+                        <td class="rank">3</td>
+                        <td class="name">TIMU</td>
+                        <td class="scr">900</td>
+                    </tr>
+
+                    <tr>
+                        <td class="sep" colspan="3"><div></div></td>
+                    </tr>
+
+                    <tr id="rankx">
+                        <td class="rank">10</td>
+                        <td class="name">JSON</td>
+                        <td class="scr">30</td>
+                    </tr>
+
+                </table>
+                <br><br>
+                <p class="prompt">Press Enter to Retry</p>
+            </div>
+        </div>
+
+        <!-- FIREBASE DB MANAGEMENT -->
         <!-- The core Firebase JS SDK is always required and must be listed first -->
         <!-- <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
         <script src="JS/database.js"></script> -->
+
+        <!-- OTHER SETUP -->
+        <script src="JS/pagecontroller.js"></script>
 
         <!-- GAME -->
         <script src="JS/roomsetup.js"></script>     <!--Controls some intrinsic game variables, such as speed, starting snake size, grid size, etc-->
