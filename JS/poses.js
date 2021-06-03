@@ -60,7 +60,6 @@ function PoseStep(){
                 //Formula for adding score = time left + (snake.lenght*50)
                 snake.score+= poses[pose].time + (poses[pose].length*50);
                 window.dispatchEvent(scoreupdate);
-                console.log('pop')
                 poses.splice(pose,1);
                 filled = false;
             }
