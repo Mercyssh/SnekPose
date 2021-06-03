@@ -41,7 +41,8 @@ function PoseStep(){
         poses[pose].time--;
         if(poses[pose].time<=0){
             poses.splice(pose,1);
-            snake.health--;
+            if(snake.health>0)
+                snake.health--;
             window.dispatchEvent(healthupdate);
         } 
 
