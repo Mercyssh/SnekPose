@@ -36,26 +36,28 @@ function PoseStep(){
 
     //Decay Poses and check for colilsion
     for(var pose in poses){
+
+        //decay pose
         poses[pose].time--;
         if(poses[pose].time<=0){
             poses.splice(pose,1);
+            window.dispatchEvent(healthupdate);
+            snake.health--;
         } 
+
         // check for collissions
         else {
             let filled = true;
             //loop through pos array and check if tile is not filled
             for(var pos of poses[pose].pos){
-                if(snake.body.findIndex(part => part.x==pos.x && part.y==pos.y)==-1){
-                    // console.log(snake.body.findIndex(part => part.x==pos.x && part.y==pos.y))
+                if(snake.body.findIndex(part => part.x==pos.x && part.y==pos.y)==-1)
                     filled = false;
-                }
             }
-            //if filled then pop it, add points and destroy self
             if(filled){
-                console.log('pop')
                 //Formula for adding score = time left + (snake.lenght*50)
                 snake.score+= poses[pose].time + (poses[pose].length*50);
                 window.dispatchEvent(scoreupdate);
+                console.log('pop')
                 poses.splice(pose,1);
                 filled = false;
             }
@@ -124,6 +126,9 @@ function generatepose(){
 
         //find empty tile
         let last = poseobject.pos[poseobject.pos.length-1];
+        if(last == undefined){
+            console.log(last, poseobject.pos[poseobject.pos.length-1],  poseobject.pos, poseobject.pos.length-1)
+        }
         let _arr = findemptytile(last.x, last.y, poseobject);
         let _target = randomrange(0,_arr.length-1, true);
         poseobject.pos.push(_arr[_target]);
