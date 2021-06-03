@@ -9,43 +9,79 @@ It mostly handles Generation of Poses, Possible Poses, .
 // CONTROL VARIABLES
 var poses = [];
 var maxposesize = 6;            // Maximum size a pose can grow to
-var maxposesonscreen = 2;       // sets the maximum number of poses which can be on screen at a time
-var poselife = 800;
+var maxposesonscreen = 1;       // sets the maximum number of poses which can be on screen at a time
+var poselife = 600;             // Default life of a pose object
+var spawntimer = 300;           // Time between each generation. Approx: 60 = 1 second
+
+var _t = spawntimer             // use this variable to tick down
 
 // HANDE LOGIC FOR POSES
 function PoseStep(){
+
     //Create Poses
-    if(poses.length==0){
-        poses.push(generatepose());
-        // console.log(poses)
+    if(poses.length<maxposesonscreen){
+        //tick down timer
+        _t--;
+
+        //execute action once timer hits 0 - generate a pose
+        if(_t<=0){
+            poses.push(generatepose());
+            _t = spawntimer;
+        }
+    }
+    else {
+        //reset timer if all are spawned
+        _t = spawntimer;
     }
 
-    //Check Collision
-    poses.forEach( (pose, i) => {
-        
-    })  
+    //Decay Poses and check for colilsion
+    for(var pose in poses){
+        poses[pose].time--;
+        if(poses[pose].time<=0){
+            poses.splice(pose,1);
+        } 
+        // check for collissions
+        else {
+            let filled = true;
+            //loop through pos array and check if tile is not filled
+            for(var pos of poses[pose].pos){
+                if(snake.body.findIndex(part => part.x==pos.x && part.y==pos.y)==-1){
+                    // console.log(snake.body.findIndex(part => part.x==pos.x && part.y==pos.y))
+                    filled = false;
+                }
+            }
+            //if filled then pop it, add points and destroy self
+            if(filled){
+                console.log('pop')
+                //Formula for adding score = time left + (snake.lenght*50)
+                snake.score+= poses[pose].time + (poses[pose].length*50);
+                window.dispatchEvent(scoreupdate);
+                poses.splice(pose,1);
+                filled = false;
+            }
+        }
+    }
+
+    //Scale Difficulty - Dynamically change maxposesonscreen and spawntimer when certain conditions are met
+
 }
 
 // DRAW THE POSES
 function PoseDraw(){
     //draw each pose
-    ctx.fillStyle='#ffffff'
+    ctx.lineWidth=2.5;
     for(var pose of poses){
+        alpha = pose.time/poselife;
+
+        //Draw outlines first, then draw internal rectangles to create overall outline
         for(var pos of pose.pos){
-            ctx.fillRect(pos.x*tilesize, pos.y*tilesize, tilesize, tilesize)
+            ctx.strokeStyle = "rgba(255, 255, 255, "+alpha+")";
+            ctx.strokeRect(pos.x*tilesize, pos.y*tilesize, tilesize, tilesize)
+        }
+        for(var pos of pose.pos){
+            ctx.clearRect(pos.x*tilesize, pos.y*tilesize, tilesize, tilesize)
         }
     }
-
-    // testing
-    ctx.lineWidth=2;
-    ctx.strokeStyle='#ffffff';
-    ctx.strokeRect(2*tilesize, 2*tilesize, tilesize, tilesize)
-    ctx.strokeRect(2*tilesize, 3*tilesize, tilesize, tilesize)
-    ctx.strokeRect(3*tilesize, 2*tilesize, tilesize, tilesize)
-    ctx.clearRect(2*tilesize, 2*tilesize, tilesize, tilesize)
-    ctx.clearRect(3*tilesize, 2*tilesize, tilesize, tilesize)
-    ctx.clearRect(2*tilesize, 3*tilesize, tilesize, tilesize)
-    // ctx.borderRect(2*tilesize,2*tilesize,50,50,"gold","red","blue","green","purple");
 }
 
 // ADDITIONAL FUNCTIONS GO HERE

@@ -5,7 +5,7 @@ The objStep() function is where all of the logic of the object resides
 */ /*
 We use a main() function which is basically just a master function within which all
 other functions are nested. This is responsible for setting up the game loop.
-The game loop is setup using requestAnimationFrame and nesting it within the funciton itself
+The game loop is setup using requestAnimationFrame and nesting it within the funciton itself.
 requestAnimationFrame calls this same function in a loop and gives the browser enough breathing
 space between each loop. It handles these spaces on its own which is why its a good idea to use it.
 */
