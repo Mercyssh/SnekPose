@@ -17,14 +17,18 @@ var gamestate = 0;
 // EXECUTE GAME LOOP
 function main(deltaTime){
 
-    // handle snake
-    SnakeStep(); SnakeDraw();
+    // CLEAR CANVAS
+    ctx.clearRect(0,0, room.width, room.height);
 
-    // handle pellets
-    PelletStep(); PelletDraw();
+    // EXECUTE LOGIC
+    SnakeStep(); 
+    PelletStep(); 
+    PoseStep(); 
 
-    // handle poses
-    PoseStep(); PoseDraw();
+    // EXECUTE DRAW
+    PelletDraw();
+    PoseDraw();
+    SnakeDraw();
 
     // update ui
     UIUpdate();

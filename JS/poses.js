@@ -17,7 +17,7 @@ function PoseStep(){
     //Create Poses
     if(poses.length==0){
         poses.push(generatepose());
-        console.log(poses)
+        // console.log(poses)
     }
 
     //Check Collision
@@ -29,16 +29,26 @@ function PoseStep(){
 // DRAW THE POSES
 function PoseDraw(){
     //draw each pose
+    ctx.fillStyle='#ffffff'
     for(var pose of poses){
         for(var pos of pose.pos){
-            ctx.fillStyle='#ffffff'
             ctx.fillRect(pos.x*tilesize, pos.y*tilesize, tilesize, tilesize)
         }
     }
+
+    // testing
+    ctx.lineWidth=2;
+    ctx.strokeStyle='#ffffff';
+    ctx.strokeRect(2*tilesize, 2*tilesize, tilesize, tilesize)
+    ctx.strokeRect(2*tilesize, 3*tilesize, tilesize, tilesize)
+    ctx.strokeRect(3*tilesize, 2*tilesize, tilesize, tilesize)
+    ctx.clearRect(2*tilesize, 2*tilesize, tilesize, tilesize)
+    ctx.clearRect(3*tilesize, 2*tilesize, tilesize, tilesize)
+    ctx.clearRect(2*tilesize, 3*tilesize, tilesize, tilesize)
+    // ctx.borderRect(2*tilesize,2*tilesize,50,50,"gold","red","blue","green","purple");
 }
 
 // ADDITIONAL FUNCTIONS GO HERE
-
 // Generates and returns an object containging pose data.
 function generatepose(){
     let poseobject = {
@@ -78,7 +88,7 @@ function generatepose(){
 
         //find empty tile
         let last = poseobject.pos[poseobject.pos.length-1];
-        let _arr = findemptytile(last.x, last.y);
+        let _arr = findemptytile(last.x, last.y, poseobject);
         let _target = randomrange(0,_arr.length-1, true);
         poseobject.pos.push(_arr[_target]);
 
@@ -88,7 +98,9 @@ function generatepose(){
 }
 
 // Takes x,y coordinates and returns an array of empty tiles around it. (no diagonals)
-function findemptytile(x, y){
+// pose parameter is an optional one, which will allow checking of pose with incomplete pose object
+// you are supposed to pass the incomplete pose object into the pass parameter - poseobject
+function findemptytile(x, y, _pose){
    
     //If out of bound coordinates, return -1
     if((x<0 || y<0) || (x>gridsize-1 || y>gridsize-1))
@@ -133,7 +145,17 @@ function findemptytile(x, y){
     if(ltile.x < 0 || ltile.y < 0 || ltile.x > gridsize-1 || ltile.y > gridsize-1)
         ltile=-1;
 
-    //check with current pos
+    //check with current pos which is being generated
+    if(_pose!=undefined){
+        if(_pose.pos.findIndex(pos => pos.x==utile.x && pos.y==utile.y)!=-1)
+            utile=-1;
+        if(_pose.pos.findIndex(pos => pos.x==dtile.x && pos.y==dtile.y)!=-1)
+            dtile=-1;
+        if(_pose.pos.findIndex(pos => pos.x==rtile.x && pos.y==rtile.y)!=-1)
+            rtile=-1;
+        if(_pose.pos.findIndex(pos => pos.x==ltile.x && pos.y==ltile.y)!=-1)
+            ltile=-1;
+    }
     
     let tiles = [utile, dtile, rtile, ltile]; //This is where output is collected
     tiles = tiles.filter(val => val!=-1);

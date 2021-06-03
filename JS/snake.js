@@ -132,8 +132,7 @@ function SnakeStep(){
 // DRAW THE SNAKE
 function SnakeDraw(){
 
-    // CLEAR CANVAS
-    ctx.clearRect(0,0, room.width, room.height);
+
 
     // draw the Snake
     // we render head, body and tail separately to make it look like they move smoothly 
