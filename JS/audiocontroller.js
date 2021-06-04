@@ -8,8 +8,9 @@ const eatSound = new Audio('ASSETS/eat.wav');       //
 const hurtSound = new Audio('ASSETS/hurt.wav');     //
 const pelletSound = new Audio('ASSETS/pop.wav');    //
 const poseSound = new Audio('ASSETS/shutter.mp3');  //
-const loseSound = new Audio('ASSETS/lose.wav');     
+const loseSound = new Audio('ASSETS/lose.wav');     // 
 const musicSound = new Audio('ASSETS/music.mp3');   //
+musicSound.loop = true;
 
 // SET AUDIOS
 
