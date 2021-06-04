@@ -4,6 +4,7 @@
 //Initialize Leaderboard
 let menu = document.getElementById('menu');                     //container for menu
 let game = document.getElementById('main');                     //container for game
+let hs = document.getElementById('highscore');                  //Last highscore on this machine
 let leaderboard = document.getElementById('leaderboard');       //container for leaderboard
 let inputpage = document.getElementById('inputpage');           //container for input page
 let nameinput = document.getElementById('nameinput');           //container for input fields
@@ -15,6 +16,7 @@ let _i, vals=[];
 var username=''
 let page=0;
 
+SyncScore();
 function Leaderboard(){
     // Update score
     score.innerHTML = snake.score; 
@@ -173,4 +175,15 @@ function updateLeaderboard(data, currentdata){
     rankx.getElementsByTagName('td')[0].innerHTML = _rank+1;
     rankx.getElementsByTagName('td')[1].innerHTML = currentdata.name;
     rankx.getElementsByTagName('td')[2].innerHTML = snake.score;
+}
+
+// Sync the highscore displayed at the top right of ur screen
+function SyncScore(){
+    let storage = window.localStorage;
+    let _pull = storage.getItem('db');
+    pull = JSON.parse(_pull);
+
+    if(_pull){
+        hs.innerHTML = pull[0].score;
+    }
 }
