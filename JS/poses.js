@@ -26,6 +26,7 @@ function PoseStep(){
         //execute action once timer hits 0 - generate a pose
         if(_t<=0){
             poses.push(generatepose());
+            pelletSound.play();
             _t = spawntimer;
         }
     }
@@ -40,9 +41,16 @@ function PoseStep(){
         //decay pose
         poses[pose].time--;
         if(poses[pose].time<=0){
+            console.log(poses[pose].length)
+            if(poses[pose].length<=snake.length){
+                if(snake.health>0){
+                    hurtSound.play();
+                    snake.health--;
+                }
+            }
+            //Delete pose
             poses.splice(pose,1);
-            if(snake.health>0)
-                snake.health--;
+            console.log(snake.length)
             window.dispatchEvent(healthupdate);
         } 
 
@@ -61,6 +69,7 @@ function PoseStep(){
                 snake.score+= poses[pose].time + (poses[pose].length*50);
                 window.dispatchEvent(scoreupdate);
                 poses.splice(pose,1);
+                poseSound.play();
                 filled = false;
             }
         }

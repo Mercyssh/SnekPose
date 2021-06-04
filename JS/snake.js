@@ -26,7 +26,7 @@ function SnakeCreate(){
     snake = {
         body: _body,
         length: startsnakesize,
-        health: 1,
+        health: 3,
         direction: '',
         lastdir: 'Right',
         lasttail: {},
@@ -130,7 +130,7 @@ function SnakeStep(){
 
     // stop game if health is 0
     if(snake.health<=0){
-        console.log('changestate')
+        loseSound.play();
         changestate();
     }
 }
@@ -335,4 +335,5 @@ function bite(i){
         snake.body.shift();
     }
     snake.length = snake.body.length;
+    hurtSound.play();
 }

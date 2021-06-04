@@ -78,6 +78,7 @@ function eatpellet(){
         snake.score+=50;
         window.dispatchEvent(healthupdate);
         window.dispatchEvent(scoreupdate);
+        eatSound.play();
     }
 }
 
@@ -91,6 +92,7 @@ function deactivate(){
 
 //Activate pellet
 function activate(){
+    pelletSound.play();
     pellet.active = true;
     pellet.pos = {x: randomrange(0, gridsize-1, true), y:randomrange(0, gridsize-1, true)};
     pellet.life = pelletlifesize;

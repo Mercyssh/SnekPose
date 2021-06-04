@@ -97,6 +97,7 @@ body{
     height: 2px; /* Slider handle height */
     background: #22AA00; /* Green background */
     cursor: pointer; /* Cursor on hover */
+    outline:none;
 }
 
 /* Slider Handle */
