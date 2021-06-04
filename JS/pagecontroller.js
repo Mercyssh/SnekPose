@@ -28,7 +28,7 @@ function Leaderboard(){
     inputpage.style.display = 'flex';
 
     // Setup BG Image
-    document.body.style.background = 'url("../ASSETS/bg.png")';
+    document.body.style.background = 'url("ASSETS/bg.png")';
     document.body.style.backgroundSize =  "100vw 100vh";
     initials[0].focus();
 

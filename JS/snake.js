@@ -37,7 +37,7 @@ function SnakeCreate(){
     }
 
     snakeface = new Image();
-    snakeface.src = '../ASSETS/snakeface.png';
+    snakeface.src = 'ASSETS/snakeface.png';
 }
 SnakeCreate();
 
