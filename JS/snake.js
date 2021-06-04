@@ -26,7 +26,7 @@ function SnakeCreate(){
     snake = {
         body: _body,
         length: startsnakesize,
-        health: 3,
+        health: 1,
         direction: '',
         lastdir: 'Right',
         lasttail: {},

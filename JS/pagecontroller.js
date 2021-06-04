@@ -7,6 +7,7 @@ let game = document.getElementById('main');                     //container for 
 let leaderboard = document.getElementById('leaderboard');       //container for leaderboard
 let inputpage = document.getElementById('inputpage');           //container for input page
 let nameinput = document.getElementById('nameinput');           //container for input fields
+let score = document.getElementById('score');                   //p tag for displaying current score
 let initials = document.getElementsByClassName('initials');     //array of all input fields
 let resultspage = document.getElementById('resultspage');       //container for results page
 let alrt = document.getElementById('alrt');                     //alrt message
@@ -15,6 +16,8 @@ var username=''
 let page=0;
 
 function Leaderboard(){
+    // Update score
+    score.innerHTML = snake.score; 
 
     // Switch to relevant div display
     menu.style.display = 'none';
@@ -82,6 +85,7 @@ function Leaderboard(){
     })
 }
 
+//HELPER FUNCTIONS
 //Responsible for regenerative leaderboard
 //Fetch Leaderboard, Get Rank, Add Rank to Leaderboard, Upload Leaderboard
 function regenerateLeaderboard(){
@@ -96,55 +100,77 @@ function regenerateLeaderboard(){
     }
 
     // If it does exist do required stuff
-    else {
+    let pull = JSON.parse(storage.getItem('db'));
+    console.log("PULLED DATA")
+    console.log(pull);
+    console.log('\n');
 
-        let pull = JSON.parse(storage.getItem('db'));
-        console.log("PULLED DATA")
-        console.log(pull);
-        console.log('\n');
+    let _push = {name: username, score: snake.score}; //Incomplete Push
+    let nameexists, final, push;
 
-        let _push = {name: username, score: snake.score}; //Incomplete Push
-        let nameexists;
+    // let nameexists = pull.findIndex(n => n.name == username) 
+    // console.log(pull.findIndex(n => n.name == username) )
 
-        // let nameexists = pull.findIndex(n => n.name == username) 
-        // console.log(pull.findIndex(n => n.name == username) )
-
-        // Find if username Exists
-        for(var n in pull){
-            if(pull[n].name == username){
-                nameexists=n;
-            }
-        }
-
-        //If Username Doesn't exist
-        if(nameexists==undefined){
-            
-            //add current player stats to the db you just pulled
-            pull.push(_push);
-            //sort the db in terms of ascending order of scores
-            let push = JSON.stringify(pull.sort((a, b) => { return a.score - b.score; }));
-            
-            console.log('USER CREATED');
-            console.log(pull.sort((a, b) => { return a.score - b.score; }));
-            console.log('\n')
-            
-            //update the db by creating a new entry for the username
-            storage.setItem('db', push);
-        } 
-        //If Username Exists and score is a highscore
-        else {
-            if(_push.score>=pull[nameexists].score){
-                
-                pull[nameexists] = _push;
-                console.log('USER UPDATED');
-                console.log(pull.sort((a, b) => { return a.score - b.score; }));
-                console.log('\n');
-
-                push = JSON.stringify(pull.sort((a, b) => { return a.score - b.score; }))
-                storage.setItem('db', push);
-            }
+    // Find if username Exists
+    for(var n in pull){
+        if(pull[n].name == username){
+            nameexists=n;
         }
     }
 
-    // storage.removeItem('db');
+    //If Username Doesn't exist
+    if(nameexists==undefined){
+        
+        //add current player stats to the db you just pulled
+        pull.push(_push);
+        //sort the db in terms of ascending order of scores
+        push = pull.sort((a, b) => { return b.score - a.score; });
+        console.log('USER CREATED');
+        console.log(push);
+        console.log('\n')
+        
+        //update the db by creating a new entry for the username
+        final = JSON.stringify(push)
+        storage.setItem('db', final);
+    } 
+    //If Username Exists and score is a highscore
+    else {
+        if(_push.score>=pull[nameexists].score){
+            
+            pull[nameexists] = _push;
+            push = pull.sort((a, b) => { return b.score - a.score; })
+            console.log('USER UPDATED');
+            console.log(push);
+            console.log('\n');
+
+            final = JSON.stringify(push)
+            storage.setItem('db', final);
+        }
+    }
+
+    //Update the UI
+    updateLeaderboard(push, _push);
+}
+
+//Here Data contains the Array pulled from localstorage. and Currentdata consists of the username and score of the current run
+function updateLeaderboard(data, currentdata){
+    let table = document.getElementById('lb');
+    let rank1 = document.getElementById('rank1');
+    let rank2 = document.getElementById('rank2');
+    let rank3 = document.getElementById('rank3');
+    let rankx = document.getElementById('rankx');
+
+    rank1.getElementsByTagName('td')[1].innerHTML = data[0].name
+    rank1.getElementsByTagName('td')[2].innerHTML = data[0].score
+
+    rank2.getElementsByTagName('td')[1].innerHTML = data[1].name
+    rank2.getElementsByTagName('td')[2].innerHTML = data[1].score
+
+    rank3.getElementsByTagName('td')[1].innerHTML = data[2].name
+    rank3.getElementsByTagName('td')[2].innerHTML = data[2].score
+
+    _rank = data.findIndex(n => n.name==currentdata.name)
+    rankx.getElementsByTagName('td')[0].innerHTML = _rank+1;
+    rankx.getElementsByTagName('td')[1].innerHTML = currentdata.name;
+    rankx.getElementsByTagName('td')[2].innerHTML = snake.score;
 }
