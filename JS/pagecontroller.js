@@ -23,11 +23,28 @@ let page=0;
 
 
 // HANDLE MENU
-// Play Button
+// Play Button - Start Game
 btns[0].addEventListener('click', e => {
     changestate();
 });
 
+// Tutorial Button - Open Lightbox
+btns[1].addEventListener('click', e => {
+    let tutorial = document.getElementById('tutorial');
+    tutorial.style.display = "block";
+});
+// Close Tutorial Button
+document.getElementById('closetutorial').addEventListener('click', e => {
+    let tutorial = document.getElementById('tutorial');
+    tutorial.style.display = "none";
+})
+
+// Share Button - Change Text and revert back
+btns[2].addEventListener('click', e => {
+    btns[2].innerHTML = '<p>•</p> Copied to Clipboard! <p>•</p>';
+    copyToClipboard('https://mercyssh.github.io/SnekPoseOnline');
+    setTimeout(function(){ btns[2].innerHTML = "<p>•</p> Share <p>•</p>" }, 1000);
+});
 
 // SWITCH TO DISPLAYING THE GAME
 function InitGame(){
@@ -213,3 +230,16 @@ function SyncScore(){
         hs.innerHTML = pull[0].score;
     }
 }
+
+// Creates a method to copy a string to clipboard
+const copyToClipboard = str => {
+    const el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  };

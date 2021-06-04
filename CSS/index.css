@@ -44,6 +44,12 @@ body{
 
     font-family: 'PixulBrush';
     font-size: 12px;
+
+    /* Unselectable */
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 .title{
@@ -106,7 +112,7 @@ body{
     column-gap: 80px;
 }
 
-.btn {
+.btn{
     display: flex;
     column-gap: 0px;
     align-items: center;
@@ -125,6 +131,7 @@ body{
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
 }
+
 .btn p{
     display: none;
     font-size: 16px;
@@ -141,7 +148,26 @@ body{
     column-gap: 0px;
 }
 
-
+/* Tutorial */
+#tutorial{
+    display: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid white;
+    position: absolute;
+}
+#closetutorial{
+    color:white;
+    position: absolute;
+    top:-25px;
+    right:-25px;
+    cursor: pointer;
+    transition: color .2s;
+}
+#closetutorial:hover{
+    color:#22AA00;
+}
 
 /* GAME */
 /* Container for the game */
