@@ -1,0 +1,135 @@
+@font-face {
+    font-family: PixulBrush;
+    src: url('../ASSETS/PixulBrush.ttf');
+}
+
+@keyframes wave{
+    from {margin-top: 0;}
+    to {margin-top: -80px;}
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-image: url('../ASSETS/bg.png');
+    background-color: #131913;
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+}
+
+/* MENU */
+.menu{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 230px;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+
+    font-family: 'PixulBrush';
+    font-size: 12px;
+}
+
+.title{
+    /* background: orange; */
+    height: 1em;
+    transform-origin: center;
+    transform: rotate(-5deg);
+    font-family: PixulBrush;
+    font-size: 80px;
+    display: flex;
+    color: #2BD600;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+.title .space{
+    width: 60px;
+}
+.title p{
+    margin-left: 3px;
+    margin-right: 3px;
+    height: max-content;
+    animation: wave 1s  ease-in-out infinite alternate;
+}
+.title p:nth-child(2){
+    animation-delay: .1s;
+}
+.title p:nth-child(3){
+    animation-delay: .2s;
+}
+.title p:nth-child(4){
+    animation-delay: .3s;
+}
+.title p:nth-child(5){
+    animation-delay: .4s;
+}
+.title p:nth-child(6){
+    animation-delay: .5s;
+}
+.title p:nth-child(7){
+    animation-delay: .6s;
+}
+.title p:nth-child(8){
+    animation-delay: .7s;
+}
+.title p:nth-child(9){
+    animation-delay: .8s;
+}
+.title .white{
+    color: #ffffff;
+}
+
+.menu-btns{
+    display: flex;
+    align-items: center;
+    /* justify-content: space-be; */
+
+    color: white;
+    column-gap: 80px;
+}
+
+.btn {
+    display: flex;
+    column-gap: 0px;
+    align-items: center;
+    justify-content: space-between;
+
+    cursor: pointer;
+    width: max-content;
+    color: white;
+
+    /* Animation */
+    transition: padding .2s, color .2s, column-gap .2s;
+
+    /* Unselectable */
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+.btn p{
+    display: none;
+    font-size: 16px;
+}
+.btn:hover{
+    padding: 0px 20px;
+    color: #2BD600;
+    column-gap: 10px;
+}
+.btn:hover p{
+    display: block;
+}
+.btn:active {
+    column-gap: 0px;
+}

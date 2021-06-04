@@ -3,6 +3,12 @@
     src: url('../ASSETS/ProximaNovaBold.otf');
 }
 
+@font-face {
+    font-family: PixulBrush;
+    src: url('../ASSETS/PixulBrush.ttf');
+}
+
+
 *{
     font-family: 'ProximaBold';
     box-sizing: border-box;
