@@ -41,16 +41,14 @@ function PoseStep(){
         //decay pose
         poses[pose].time--;
         if(poses[pose].time<=0){
-            console.log(poses[pose].length)
             if(poses[pose].length<=snake.length){
                 if(snake.health>0){
                     hurtSound.play();
-                    snake.health--;
+                    snake.health=Math.floor(snake.health-1);
                 }
             }
             //Delete pose
             poses.splice(pose,1);
-            console.log(snake.length)
             window.dispatchEvent(healthupdate);
         } 
 
@@ -77,6 +75,7 @@ function PoseStep(){
 
     //Scale Difficulty - Dynamically change maxposesonscreen and spawntimer when certain conditions are met
     
+
 }
 
 // DRAW THE POSES
@@ -134,9 +133,6 @@ function generatepose(){
 
         //find empty tile
         let last = poseobject.pos[poseobject.pos.length-1];
-        if(last == undefined){
-            console.log(last, poseobject.pos[poseobject.pos.length-1],  poseobject.pos, poseobject.pos.length-1)
-        }
         let _arr = findemptytile(last.x, last.y, poseobject);
         if(_arr==-1)
             break;

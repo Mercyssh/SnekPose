@@ -118,7 +118,7 @@ function SnakeStep(){
 
             // bite off the body if snake bites itself
             if(bitecheck()!=-1){
-                snake.health--;
+                snake.health = Math.floor(snake.health-1);
                 window.dispatchEvent(healthupdate);
                 bite(bitecheck());
             }
