@@ -3,7 +3,11 @@
 
 //Initialize Leaderboard
 let menu = document.getElementById('menu');                     //container for menu
+let menubtns = document.getElementById('menu-btns')             //Get button Container
+let btns = menubtns.getElementsByClassName('btn');              //Get Array of Buttons
+
 let game = document.getElementById('main');                     //container for game
+
 let hs = document.getElementById('highscore');                  //Last highscore on this machine
 let leaderboard = document.getElementById('leaderboard');       //container for leaderboard
 let inputpage = document.getElementById('inputpage');           //container for input page
@@ -12,10 +16,28 @@ let score = document.getElementById('score');                   //p tag for disp
 let initials = document.getElementsByClassName('initials');     //array of all input fields
 let resultspage = document.getElementById('resultspage');       //container for results page
 let alrt = document.getElementById('alrt');                     //alrt message
+
 let _i, vals=[];
 var username=''
 let page=0;
 
+
+// HANDLE MENU
+// Play Button
+btns[0].addEventListener('click', e => {
+    changestate();
+});
+
+
+// SWITCH TO DISPLAYING THE GAME
+function InitGame(){
+    menu.style.display = 'none';
+    leaderboard.style.display = 'none';
+    game.style.display = 'block';
+}
+
+
+// HANDLE LEADERBOARD
 SyncScore();
 function Leaderboard(){
     // Update score
@@ -27,9 +49,7 @@ function Leaderboard(){
     leaderboard.style.display = 'block';
     inputpage.style.display = 'flex';
 
-    // Setup BG Image
-    document.body.style.background = 'url("ASSETS/bg.png")';
-    document.body.style.backgroundSize =  "100vw 100vh";
+    // START INPUT
     initials[0].focus();
 
     // Autoset focus and hide warning
@@ -147,6 +167,12 @@ function regenerateLeaderboard(){
 
             final = JSON.stringify(push)
             storage.setItem('db', final);
+        }
+        //If name exist but not highscore 
+        else {
+            console.log('not hiscore')
+            pull[nameexists] = _push;
+            push = pull.sort((a, b) => { return b.score - a.score; })
         }
     }
 

@@ -74,7 +74,6 @@ function eatpellet(){
         deactivate();
         if(snake.health<3)
             snake.health+=.25;
-        console.log(snake.health)
         snake.length+=1;
         snake.score+=50;
         window.dispatchEvent(healthupdate);
