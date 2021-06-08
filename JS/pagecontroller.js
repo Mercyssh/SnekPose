@@ -21,6 +21,18 @@ let _i, vals=[];
 var username=''
 let page=0;
 
+// INITIALIZE FIREBASE - ONLINE DB
+var firebaseConfig = {
+    apiKey: "AIzaSyBI5fUVI7LJTU3eVLmycIbAQq0R4q21n80",
+    authDomain: "snekpose.firebaseapp.com",
+    projectId: "snekpose",
+    storageBucket: "snekpose.appspot.com",
+    messagingSenderId: "393165964224",
+    appId: "1:393165964224:web:56c7a497dfd2ef8d0f7e25"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
 
 // HANDLE MENU
 // Play Button - Start Game
@@ -42,7 +54,7 @@ document.getElementById('closetutorial').addEventListener('click', e => {
 // Share Button - Change Text and revert back
 btns[2].addEventListener('click', e => {
     btns[2].innerHTML = '<p>•</p> Copied to Clipboard! <p>•</p>';
-    copyToClipboard('https://mercyssh.github.io/SnekPoseOnline');
+    copyToClipboard('https://www.snekpose.tk');
     setTimeout(function(){ btns[2].innerHTML = "<p>•</p> Share <p>•</p>" }, 1000);
 });
 
@@ -53,10 +65,16 @@ function InitGame(){
     game.style.display = 'block';
 }
 
-
 // HANDLE LEADERBOARD
-SyncScore();
+// SyncScore();
 function Leaderboard(){
+
+    //fetch db
+    let query, nameexist=false;
+    db.collection("gamedata").doc("leaderboard").get().then((q) => {   
+        query = q.data().scores;
+    })
+
     // Update score
     score.innerHTML = snake.score; 
 
@@ -71,6 +89,8 @@ function Leaderboard(){
 
     // Autoset focus and hide warning
     for(var initial of initials){
+
+        // Set focus to last empty element
         initial.addEventListener('click',function(){
             for(var val of initials)
                 vals.push(val.value);
@@ -80,12 +100,15 @@ function Leaderboard(){
                 initials[_i].focus();
         })
 
+        // Set focus to next element
         initial.addEventListener('keyup',function(e){
+            
             // find empty field
             for(var val of initials)
                 vals.push(val.value);
             let _i = vals.indexOf("");
 
+            // set focus to previous field
             if(e.key!='Backspace'){
                 if(_i!=-1)
                     initials[_i].focus();
@@ -98,14 +121,26 @@ function Leaderboard(){
             }
             username = vals[0]+vals[1]+vals[2]+vals[3];
 
+            //Hide unhide alert 2
+            // Find if username Exists
+            for(var n in query){
+                if(query[n].name == username)
+                    nameexist = true;
+            }
+            if(nameexist)
+                alrt2.style.display = 'block';
+            else
+                alrt2.style.display = 'none';
+
             //Hide unhide alert
             if(username.length==4)
                 alrt.style.display='none';
             else
                 alrt.style.display='block';
             
-            //reset vals
+            //reset vals and nameexist
             vals=[];
+            nameexist=false;
         })
     }
 
@@ -115,7 +150,8 @@ function Leaderboard(){
             if(page==0){
             inputpage.style.display='none';
             resultspage.style.display='flex';
-            regenerateLeaderboard();
+            RegenLeaderboard();
+            // regenerateLeaderboard();
             page=1;
             } else {
                 location.reload();
@@ -125,76 +161,60 @@ function Leaderboard(){
 }
 
 //HELPER FUNCTIONS
-//Responsible for regenerative leaderboard
+//Responsible for regenerating leaderboard
 //Fetch Leaderboard, Get Rank, Add Rank to Leaderboard, Upload Leaderboard
-function regenerateLeaderboard(){
-    let storage = window.localStorage;
-    let db = storage.getItem('db');
+// Your web app's Firebase configuration
 
-    // If DB doesn't exist, create one
-    if(!db){
-        let push = JSON.stringify([{name: '----', score:0},{name: '----', score:0},{name: '----', score:0},{name: '----', score:0}]);
-        storage.setItem('db', push)
-        console.log("Created Database!\n");
-    }
-
-    // If it does exist do required stuff
-    let pull = JSON.parse(storage.getItem('db'));
-    console.log("PULLED DATA")
-    console.log(pull);
-    console.log('\n');
-
-    let _push = {name: username, score: snake.score}; //Incomplete Push
-    let nameexists, final, push;
-
-    // let nameexists = pull.findIndex(n => n.name == username) 
-    // console.log(pull.findIndex(n => n.name == username) )
-
-    // Find if username Exists
-    for(var n in pull){
-        if(pull[n].name == username){
-            nameexists=n;
-        }
-    }
-
-    //If Username Doesn't exist
-    if(nameexists==undefined){
+// This function will pull the leaderboard from an online DB, it will also update it
+function RegenLeaderboard(){
+    let alrt2 = document.getElementById("alrt2");
+    
+    //Query the stored data, once you recieve it, do something with it
+    db.collection("gamedata").doc("leaderboard").get().then((q) => {
         
-        //add current player stats to the db you just pulled
-        pull.push(_push);
-        //sort the db in terms of ascending order of scores
-        push = pull.sort((a, b) => { return b.score - a.score; });
-        console.log('USER CREATED');
-        console.log(push);
-        console.log('\n')
+        //Existing Data just pulled from the leaderboards
+        let query = q.data().scores;
+        let write = {name: username, score: snake.score};
+        let nameexists;
+
+        // Find if username Exists
+        for(var n in query){
+            if(query[n].name == username){
+                nameexists=n;
+            }
+        }
         
-        //update the db by creating a new entry for the username
-        final = JSON.stringify(push)
-        storage.setItem('db', final);
-    } 
-    //If Username Exists and score is a highscore
-    else {
-        if(_push.score>=pull[nameexists].score){
-            
-            pull[nameexists] = _push;
-            push = pull.sort((a, b) => { return b.score - a.score; })
-            console.log('USER UPDATED');
-            console.log(push);
-            console.log('\n');
+        //If Username Doesn't exist
+        if(nameexists==undefined){
+            //Hide Alert
+            alrt2.style.display = "none";
 
-            final = JSON.stringify(push)
-            storage.setItem('db', final);
-        }
-        //If name exist but not highscore 
-        else {
-            console.log('not hiscore')
-            pull[nameexists] = _push;
-            push = pull.sort((a, b) => { return b.score - a.score; })
-        }
-    }
+            //add current player stats to the db you just pulled and sort
+            query.push(write);
+            query = query.sort((a, b) => { return b.score - a.score; });
 
-    //Update the UI
-    updateLeaderboard(push, _push);
+            //update the db
+            db.collection("gamedata").doc("leaderboard").set({scores: query});
+        }
+        //If Username Exists - Show warning, if highscore, update
+        else{
+            //Display Alert
+            alrt2.style.display = "block";
+
+            //If its a new Highscore!
+            if(write.score>=query[nameexists].score){
+                //update query and sort it
+                query[nameexists].score=write.score;
+                query = query.sort((a, b) => { return b.score - a.score; })
+
+                //update the db
+                db.collection("gamedata").doc("leaderboard").set({scores: query});
+            }
+        }
+
+        //Display the scores onto the leaderboard
+        updateLeaderboard(query, write);
+    })    
 }
 
 //Here Data contains the Array pulled from localstorage. and Currentdata consists of the username and score of the current run
@@ -242,4 +262,4 @@ const copyToClipboard = str => {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-  };
+};

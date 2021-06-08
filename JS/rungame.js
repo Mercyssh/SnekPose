@@ -12,8 +12,6 @@ space between each loop. It handles these spaces on its own which is why its a g
 
 // DEFINE STARTING GAME STATE: "MENU", "GAME", "LEADERBOARD"
 var gamestate = "MENU";
-// regenerateLeaderboard()
-// Leaderboard();
 
 // Changes state of the game
 function changestate(){

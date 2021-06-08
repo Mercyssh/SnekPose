@@ -369,3 +369,6 @@ body{
     font-size: 25px;
     width: 300px;
 }
+#alrt2{
+    display: none;
+}
