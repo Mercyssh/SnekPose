@@ -2,6 +2,7 @@
 
 // GET AUDIO CONTROL
 var vol = document.getElementById('volume');
+let _btns = document.getElementById('menu-btns').getElementsByClassName('btn');  //Array of menu buttons
 
 // CREATE AUDIO FILES
 const eatSound = new Audio('ASSETS/eat.wav');       //
@@ -12,8 +13,15 @@ const loseSound = new Audio('ASSETS/lose.wav');     //
 const musicSound = new Audio('ASSETS/music.mp3');   //
 musicSound.loop = true;
 
-// SET AUDIOS
+// MENU AUDIOS
+for(var btn of _btns){
+    btn.addEventListener('mouseover', e => {
+        pelletSound.play();
+    })
+}
 
+
+// SET AUDIOS
 SyncVolume();
 updateVolume();
 vol.addEventListener('mousemove', function(){
