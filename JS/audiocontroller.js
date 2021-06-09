@@ -13,13 +13,12 @@ const loseSound = new Audio('ASSETS/lose.wav');     //
 const musicSound = new Audio('ASSETS/music.mp3');   //
 musicSound.loop = true;
 
-// MENU AUDIOS
+// SETUP MENU AUDIOS
 for(var btn of _btns){
     btn.addEventListener('mouseover', e => {
         pelletSound.play();
     })
 }
-
 
 // SET AUDIOS
 SyncVolume();
